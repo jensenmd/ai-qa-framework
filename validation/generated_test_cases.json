@@ -22,196 +22,74 @@
       "method": "POST",
       "category": "negative",
       "description": "Authentication fails with invalid credentials",
-      "preconditions": "None",
+      "preconditions": "API is accessible",
       "inputs": {
-        "username": "invaliduser",
-        "password": "wrongpassword"
+        "username": "invalid_user",
+        "password": "wrong_password"
       },
       "expected_status_code": 403,
-      "expected_behavior": "Returns forbidden error without token",
-      "risk_level": "medium"
+      "expected_behavior": "Returns forbidden error without exposing sensitive information",
+      "risk_level": "high"
     },
     {
       "test_id": "TC003",
-      "endpoint": "/auth",
+      "endpoint": "/booking",
       "method": "POST",
-      "category": "data_validation",
-      "description": "Authentication request with missing required fields",
-      "preconditions": "None",
+      "category": "happy_path",
+      "description": "Create a new booking with all required fields",
+      "preconditions": "API is accessible",
       "inputs": {
-        "username": "admin"
+        "firstname": "John",
+        "lastname": "Doe",
+        "totalprice": 150,
+        "depositpaid": true,
+        "bookingdates": {
+          "checkin": "2024-12-01",
+          "checkout": "2024-12-05"
+        },
+        "additionalneeds": "Breakfast"
       },
-      "expected_status_code": 400,
-      "expected_behavior": "Returns bad request error for missing password field",
+      "expected_status_code": 200,
+      "expected_behavior": "Booking is created and returns booking details with unique ID",
       "risk_level": "medium"
     },
     {
       "test_id": "TC004",
       "endpoint": "/booking",
-      "method": "GET",
-      "category": "happy_path",
-      "description": "Retrieve all bookings without filters",
-      "preconditions": "At least one booking exists in the system",
-      "inputs": {},
-      "expected_status_code": 200,
-      "expected_behavior": "Returns array of all booking IDs",
-      "risk_level": "low"
+      "method": "POST",
+      "category": "data_validation",
+      "description": "Attempt to create booking with missing required fields",
+      "preconditions": "API is accessible",
+      "inputs": {
+        "firstname": "John",
+        "totalprice": 150
+      },
+      "expected_status_code": 400,
+      "expected_behavior": "Returns bad request error indicating missing required fields",
+      "risk_level": "medium"
     },
     {
       "test_id": "TC005",
       "endpoint": "/booking",
       "method": "GET",
-      "category": "happy_path",
-      "description": "Filter bookings by firstname",
-      "preconditions": "Bookings exist with specific firstname",
+      "category": "edge_case",
+      "description": "Filter bookings with checkin date after checkout date",
+      "preconditions": "Bookings exist in the system",
       "inputs": {
-        "firstname": "John"
+        "checkin": "2024-12-10",
+        "checkout": "2024-12-05"
       },
       "expected_status_code": 200,
-      "expected_behavior": "Returns only booking IDs matching the firstname filter",
+      "expected_behavior": "Returns empty list or handles invalid date range gracefully",
       "risk_level": "low"
     },
     {
       "test_id": "TC006",
-      "endpoint": "/booking",
-      "method": "GET",
-      "category": "edge_case",
-      "description": "Filter bookings with date range where checkin equals checkout",
-      "preconditions": "Bookings exist in the system",
-      "inputs": {
-        "checkin": "2024-01-15",
-        "checkout": "2024-01-15"
-      },
-      "expected_status_code": 200,
-      "expected_behavior": "Returns bookings matching the single-day stay criteria",
-      "risk_level": "medium"
-    },
-    {
-      "test_id": "TC007",
-      "endpoint": "/booking",
-      "method": "POST",
-      "category": "happy_path",
-      "description": "Create new booking with all required fields",
-      "preconditions": "None",
-      "inputs": {
-        "firstname": "Jane",
-        "lastname": "Doe",
-        "totalprice": 250,
-        "depositpaid": true,
-        "bookingdates": {
-          "checkin": "2024-02-01",
-          "checkout": "2024-02-05"
-        }
-      },
-      "expected_status_code": 200,
-      "expected_behavior": "Creates new booking and returns booking details with ID",
-      "risk_level": "high"
-    },
-    {
-      "test_id": "TC008",
-      "endpoint": "/booking",
-      "method": "POST",
-      "category": "happy_path",
-      "description": "Create booking with optional additionalneeds field",
-      "preconditions": "None",
-      "inputs": {
-        "firstname": "Bob",
-        "lastname": "Smith",
-        "totalprice": 300,
-        "depositpaid": false,
-        "bookingdates": {
-          "checkin": "2024-03-10",
-          "checkout": "2024-03-15"
-        },
-        "additionalneeds": "Breakfast"
-      },
-      "expected_status_code": 200,
-      "expected_behavior": "Creates booking including the optional field",
-      "risk_level": "medium"
-    },
-    {
-      "test_id": "TC009",
-      "endpoint": "/booking",
-      "method": "POST",
-      "category": "negative",
-      "description": "Create booking with missing required firstname",
-      "preconditions": "None",
-      "inputs": {
-        "lastname": "Johnson",
-        "totalprice": 150,
-        "depositpaid": true,
-        "bookingdates": {
-          "checkin": "2024-04-01",
-          "checkout": "2024-04-03"
-        }
-      },
-      "expected_status_code": 400,
-      "expected_behavior": "Returns bad request error for missing required field",
-      "risk_level": "medium"
-    },
-    {
-      "test_id": "TC010",
-      "endpoint": "/booking",
-      "method": "POST",
-      "category": "data_validation",
-      "description": "Create booking with invalid date format",
-      "preconditions": "None",
-      "inputs": {
-        "firstname": "Alice",
-        "lastname": "Brown",
-        "totalprice": 200,
-        "depositpaid": true,
-        "bookingdates": {
-          "checkin": "01-02-2024",
-          "checkout": "05-02-2024"
-        }
-      },
-      "expected_status_code": 400,
-      "expected_behavior": "Returns bad request error for invalid date format",
-      "risk_level": "medium"
-    },
-    {
-      "test_id": "TC011",
-      "endpoint": "/booking",
-      "method": "POST",
-      "category": "edge_case",
-      "description": "Create booking with checkout date before checkin date",
-      "preconditions": "None",
-      "inputs": {
-        "firstname": "Test",
-        "lastname": "User",
-        "totalprice": 100,
-        "depositpaid": false,
-        "bookingdates": {
-          "checkin": "2024-05-10",
-          "checkout": "2024-05-05"
-        }
-      },
-      "expected_status_code": 400,
-      "expected_behavior": "Returns error for invalid date range",
-      "risk_level": "high"
-    },
-    {
-      "test_id": "TC012",
-      "endpoint": "/booking/{id}",
-      "method": "GET",
-      "category": "happy_path",
-      "description": "Retrieve existing booking by valid ID",
-      "preconditions": "Booking with ID 1 exists",
-      "inputs": {
-        "id": 1
-      },
-      "expected_status_code": 200,
-      "expected_behavior": "Returns complete booking details for the specified ID",
-      "risk_level": "low"
-    },
-    {
-      "test_id": "TC013",
       "endpoint": "/booking/{id}",
       "method": "GET",
       "category": "negative",
       "description": "Retrieve booking with non-existent ID",
-      "preconditions": "None",
+      "preconditions": "API is accessible",
       "inputs": {
         "id": 999999
       },
@@ -220,158 +98,90 @@
       "risk_level": "low"
     },
     {
-      "test_id": "TC014",
-      "endpoint": "/booking/{id}",
-      "method": "PUT",
-      "category": "auth",
-      "description": "Update booking without authentication",
-      "preconditions": "Booking with ID 1 exists",
-      "inputs": {
-        "id": 1,
-        "body": {
-          "firstname": "Updated",
-          "lastname": "Name",
-          "totalprice": 350,
-          "depositpaid": true,
-          "bookingdates": {
-            "checkin": "2024-06-01",
-            "checkout": "2024-06-05"
-          }
-        }
-      },
-      "expected_status_code": 403,
-      "expected_behavior": "Returns forbidden error when no auth token provided",
-      "risk_level": "high"
-    },
-    {
-      "test_id": "TC015",
+      "test_id": "TC007",
       "endpoint": "/booking/{id}",
       "method": "DELETE",
       "category": "auth",
-      "description": "Delete booking without authentication",
-      "preconditions": "Booking with ID 2 exists",
+      "description": "Attempt to delete booking without authentication",
+      "preconditions": "Valid booking exists",
       "inputs": {
-        "id": 2
+        "id": 1,
+        "headers": {}
       },
       "expected_status_code": 403,
-      "expected_behavior": "Returns forbidden error when no auth token provided",
+      "expected_behavior": "Returns forbidden error due to missing authentication",
       "risk_level": "high"
     },
     {
-      "test_id": "TC016",
+      "test_id": "TC008",
+      "endpoint": "/booking",
+      "method": "POST",
+      "category": "edge_case",
+      "description": "Create booking with negative total price",
+      "preconditions": "API is accessible",
+      "inputs": {
+        "firstname": "Test",
+        "lastname": "User",
+        "totalprice": -100,
+        "depositpaid": false,
+        "bookingdates": {
+          "checkin": "2024-12-01",
+          "checkout": "2024-12-05"
+        }
+      },
+      "expected_status_code": 400,
+      "expected_behavior": "Validates that total price cannot be negative",
+      "risk_level": "medium"
+    },
+    {
+      "test_id": "TC009",
       "endpoint": "/ping",
       "method": "GET",
       "category": "happy_path",
       "description": "Health check endpoint verification",
-      "preconditions": "API service is running",
+      "preconditions": "API server is running",
       "inputs": {},
       "expected_status_code": 201,
-      "expected_behavior": "Returns success indicating API is operational",
+      "expected_behavior": "Confirms API is operational and responsive",
       "risk_level": "low"
     },
     {
-      "test_id": "TC017",
-      "endpoint": "/booking",
-      "method": "POST",
-      "category": "edge_case",
-      "description": "Create booking with zero total price",
-      "preconditions": "None",
-      "inputs": {
-        "firstname": "Free",
-        "lastname": "Stay",
-        "totalprice": 0,
-        "depositpaid": false,
-        "bookingdates": {
-          "checkin": "2024-07-01",
-          "checkout": "2024-07-02"
-        }
-      },
-      "expected_status_code": 200,
-      "expected_behavior": "Creates booking with zero price (free stay)",
-      "risk_level": "medium"
-    },
-    {
-      "test_id": "TC018",
-      "endpoint": "/booking",
+      "test_id": "TC010",
+      "endpoint": "/auth",
       "method": "POST",
       "category": "data_validation",
-      "description": "Create booking with negative total price",
-      "preconditions": "None",
+      "description": "Authentication with empty username and password",
+      "preconditions": "API is accessible",
       "inputs": {
-        "firstname": "Invalid",
-        "lastname": "Price",
-        "totalprice": -100,
-        "depositpaid": true,
-        "bookingdates": {
-          "checkin": "2024-08-01",
-          "checkout": "2024-08-05"
-        }
+        "username": "",
+        "password": ""
       },
-      "expected_status_code": 400,
-      "expected_behavior": "Returns error for invalid negative price",
-      "risk_level": "medium"
-    },
-    {
-      "test_id": "TC019",
-      "endpoint": "/booking",
-      "method": "GET",
-      "category": "edge_case",
-      "description": "Filter bookings with multiple query parameters",
-      "preconditions": "Bookings exist matching the criteria",
-      "inputs": {
-        "firstname": "John",
-        "lastname": "Doe",
-        "checkin": "2024-01-01",
-        "checkout": "2024-12-31"
-      },
-      "expected_status_code": 200,
-      "expected_behavior": "Returns bookings matching all filter criteria",
-      "risk_level": "low"
-    },
-    {
-      "test_id": "TC020",
-      "endpoint": "/booking",
-      "method": "POST",
-      "category": "data_validation",
-      "description": "Create booking with wrong data type for totalprice",
-      "preconditions": "None",
-      "inputs": {
-        "firstname": "Type",
-        "lastname": "Error",
-        "totalprice": "not-a-number",
-        "depositpaid": true,
-        "bookingdates": {
-          "checkin": "2024-09-01",
-          "checkout": "2024-09-05"
-        }
-      },
-      "expected_status_code": 400,
-      "expected_behavior": "Returns error for invalid data type",
+      "expected_status_code": 403,
+      "expected_behavior": "Rejects empty credentials and returns appropriate error",
       "risk_level": "medium"
     }
   ],
   "coverage_summary": {
-    "total_tests": 20,
-    "happy_path": 6,
-    "negative": 3,
-    "edge_cases": 5,
-    "auth": 2,
-    "data_validation": 4
+    "total_tests": 10,
+    "happy_path": 3,
+    "negative": 2,
+    "edge_cases": 2,
+    "auth": 1,
+    "data_validation": 2
   },
   "coverage_gaps": [
-    "PUT endpoint with valid authentication",
-    "DELETE endpoint with valid authentication",
-    "Concurrent booking creation scenarios",
-    "Rate limiting and performance testing",
-    "Special characters in string fields",
+    "PUT /booking/{id} endpoint not tested",
+    "Date format validation for booking dates",
+    "Concurrent booking scenarios",
+    "Rate limiting and throttling tests",
+    "Special characters in name fields",
     "Maximum length validation for string fields",
-    "Partial update scenarios for PUT endpoint"
+    "Performance testing for GET /booking with large result sets"
   ],
   "high_risk_areas": [
-    "Authentication and authorization for PUT/DELETE operations",
-    "Date validation and logical date range checks",
-    "Data integrity when creating bookings",
-    "Missing validation for string field lengths",
-    "No apparent input sanitization testing"
+    "Authentication security - token generation and validation",
+    "Authorization for PUT and DELETE operations",
+    "Input validation for booking creation",
+    "Protection against SQL injection in query parameters"
   ]
 }

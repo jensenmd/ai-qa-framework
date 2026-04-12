@@ -29,7 +29,7 @@ def generate_test_cases(spec: dict) -> dict:
     spec_text = json.dumps(spec, indent=2)
 
     prompt = f"""You are a senior QA engineer analyzing an OpenAPI specification.
-Your job is to generate up to 20 structured test cases that cover:
+Your job is to generate up to 10 structured test cases that cover:
 - Happy path scenarios
 - Negative/error scenarios  
 - Edge cases and boundary conditions
@@ -76,7 +76,7 @@ OpenAPI Spec:
 
     message = client.messages.create(
         model="claude-opus-4-20250514",
-        max_tokens=8192,
+        max_tokens=4096,
         messages=[
             {"role": "user", "content": prompt}
         ]
@@ -94,11 +94,23 @@ OpenAPI Spec:
         response_text = response_text[:-3]
     response_text = response_text.strip()
 
-    # Parse the JSON response
-    test_cases = json.loads(response_text)
+    # Handle truncated JSON by attempting to fix incomplete responses
+    try:
+        test_cases = json.loads(response_text)
+    except json.JSONDecodeError:
+        last_bracket = response_text.rfind('},')
+        if last_bracket > 0:
+            truncated = response_text[:last_bracket + 1]
+            response_text = truncated + '''],
+  "coverage_summary": {"total_tests": 0, "happy_path": 0, "negative": 0, "edge_cases": 0, "auth": 0, "data_validation": 0},
+  "coverage_gaps": ["Response truncated — rerun for complete analysis"],
+  "high_risk_areas": ["Response truncated — rerun for complete analysis"]
+}'''
+            test_cases = json.loads(response_text)
+        else:
+            raise
 
     return test_cases
-
 
 def save_test_cases(test_cases: dict, output_path: str):
     """Save generated test cases to a JSON file for human review."""
