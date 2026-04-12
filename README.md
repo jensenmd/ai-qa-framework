@@ -2,9 +2,9 @@
 
 **AI-Assisted Test Case Generation & Execution Framework**
 
-[![CI Pipeline](https://github.com/jensenmd/ai-qa-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/jensenmd/ai-qa-framework/actions/workflows/ci.yml)
-
 ![AI-QA Framework Preview](preview.png)
+
+[![CI Pipeline](https://github.com/jensenmd/ai-qa-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/jensenmd/ai-qa-framework/actions/workflows/ci.yml)
 
 ---
 
