@@ -210,13 +210,16 @@ The pipeline requires `ANTHROPIC_API_KEY` set as a GitHub Actions secret.
 
 ## Related Projects
 
-- **[qa-automation-showcase](https://github.com/jensenmd/qa-automation-showcase)** — pytest + Python/pandas data validation + Postman/JavaScript + GitHub Actions CI
-- **[restful-booker-qa](https://github.com/jensenmd/restful-booker-qa)** — Playwright/JavaScript UI automation + Postman/Newman + GitHub Actions CI
-- **[pharmacy-spend-etl-qa](https://github.com/jensenmd/pharmacy-spend-etl-qa)** — SQL-driven ETL pipeline validation using CMS Medicare Part D data
+| Project | Focus | Stack |
+| --- | --- | --- |
+| [qa-automation-showcase](https://github.com/jensenmd/qa-automation-showcase) | REST API testing, data validation, CI/CD integration | Python / pytest / Postman / GitHub Actions |
+| [restful-booker-qa](https://github.com/jensenmd/restful-booker-qa) | Full-stack layered testing — API + UI automation | Postman / Newman / Playwright / GitHub Actions |
+| [pharmacy-spend-etl-qa](https://github.com/jensenmd/pharmacy-spend-etl-qa) | ETL pipeline validation, SQL-driven data integrity testing | Python / pytest / SQLite / pandas |
+| **ai-qa-framework** (this repo) | AI-assisted test generation, human-in-the-loop validation | Python / Claude API / pytest / GitHub Actions |
 
 ---
 
 ## Author
 
 **Michael D. Jensen** — Senior QA Engineer
-[LinkedIn](https://linkedin.com/in/michaeljensen-qa) · [GitHub](https://github.com/jensenmd)
+[LinkedIn](https://linkedin.com/in/michaeljensen-qa) · [GitHub](https://github.com/jensenmd/)
