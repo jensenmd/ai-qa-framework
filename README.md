@@ -12,7 +12,7 @@
 
 A working demonstration of AI-assisted QA engineering — not a concept, not a tutorial clone, but a framework I built to show how AI can be integrated into real QA workflows as a **capability multiplier**, not a replacement for human judgment.
 
-This project demonstrates the philosophy I apply in my daily QA practice:
+This project is built around a core principle:
 
 > **AI proposes. Human validates. Automation executes.**
 
