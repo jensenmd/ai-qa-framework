@@ -4,7 +4,7 @@
 
 [![CI Pipeline](https://github.com/jensenmd/ai-qa-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/jensenmd/ai-qa-framework/actions/workflows/ci.yml)
 
-![AI-QA Framework Preview](preview.png)
+![AI-QA Framework Preview](ai-qa-framework-previewv2.png)
 
 ---
 
