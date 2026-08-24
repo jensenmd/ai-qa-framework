@@ -216,6 +216,8 @@ The pipeline requires `ANTHROPIC_API_KEY` set as a GitHub Actions secret.
 | [restful-booker-qa](https://github.com/jensenmd/restful-booker-qa) | Full-stack layered testing — API + UI automation | Postman / Newman / Playwright / GitHub Actions |
 | [pharmacy-spend-etl-qa](https://github.com/jensenmd/pharmacy-spend-etl-qa) | ETL pipeline validation, SQL-driven data integrity testing | Python / pytest / SQLite / pandas |
 | **ai-qa-framework** (this repo) | AI-assisted test generation, human-in-the-loop validation | Python / Claude API / pytest / GitHub Actions |
+| [claude-code-qa-sessions](https://github.com/jensenmd/claude-code-qa-sessions) | Agentic QA analysis with human-reviewed recommendations | Claude Code / GitHub / QA analysis |
+| [mapmyrun-quality-investigation](https://github.com/jensenmd/mapmyrun-quality-investigation) | Black-box mobile/GPS QA investigation — field testing and evidence-bounded analysis | iPhone / Apple Watch / MapMyRun / field evidence |
 
 ---
 
