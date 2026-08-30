@@ -1,5 +1,7 @@
 # ai-qa-framework
 
+![ai-qa-framework portfolio project card](ai-qa-framework-project-card.png)
+
 **AI-Assisted Test Case Generation & Execution Framework**
 
 [![CI Pipeline](https://github.com/jensenmd/ai-qa-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/jensenmd/ai-qa-framework/actions/workflows/ci.yml)
@@ -219,7 +221,7 @@ This project is part of a broader QA portfolio demonstrating complementary quali
 | [restful-booker-qa](https://github.com/jensenmd/restful-booker-qa) | Layered API and UI automation using Postman, Newman, Playwright, and GitHub Actions |
 | [pharmacy-spend-etl-qa](https://github.com/jensenmd/pharmacy-spend-etl-qa) | ETL pipeline and SQL-driven data-integrity validation modeled after healthcare analytics work |
 | [qa-automation-showcase](https://github.com/jensenmd/qa-automation-showcase) | REST API testing, data validation, and CI/CD-integrated automation |
-| [ai-qa-framework](https://github.com/jensenmd/ai-qa-framework) | Human-reviewed AI-assisted test generation with structured cases and pytest execution |
+| [ai-qa-framework](https://github.com/jensenmd/ai-qa-framework) **(this repository)** | Human-reviewed AI-assisted test generation with structured cases and pytest execution |
 | [claude-code-qa-sessions](https://github.com/jensenmd/claude-code-qa-sessions) | Agentic analysis of existing QA repositories with human review and targeted implementation |
 | [agentqa-orchestrator](https://github.com/jensenmd/agentqa-orchestrator) | Structured agentic code auditing using Python, Pydantic, Gemini, and JSON |
 
