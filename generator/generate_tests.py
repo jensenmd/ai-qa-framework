@@ -14,6 +14,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 client = Anthropic()
+MODEL = os.getenv("ANTHROPIC_MODEL", "claude-haiku-4-5-20251001")
+
 
 def load_spec(spec_path: str) -> dict:
     """Load an OpenAPI spec from a JSON file."""
@@ -75,7 +77,7 @@ OpenAPI Spec:
     print("AI is generating test cases — this may take a moment...\n")
 
     message = client.messages.create(
-        model="claude-opus-4-20250514",
+        model=MODEL,
         max_tokens=4096,
         messages=[
             {"role": "user", "content": prompt}

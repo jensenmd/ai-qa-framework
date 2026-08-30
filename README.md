@@ -2,9 +2,9 @@
 
 **AI-Assisted Test Case Generation & Execution Framework**
 
-![AI-QA Framework Preview](preview.png)
-
 [![CI Pipeline](https://github.com/jensenmd/ai-qa-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/jensenmd/ai-qa-framework/actions/workflows/ci.yml)
+
+![AI-QA Framework Preview](preview.png)
 
 ---
 
@@ -64,8 +64,8 @@ OpenAPI Spec
      │
      ▼
 ┌─────────────────────────┐
-│   GitHub Actions CI     │  ← Runs automatically on every push
-│   + HTML Test Report    │    Full pipeline in the cloud
+│   GitHub Actions CI     │  ← Validates reviewed cases on every push
+│   + HTML Test Report    │    Live AI generation is a manual review flow
 └─────────────────────────┘
 ```
 
@@ -181,14 +181,18 @@ python -m pytest tests/test_bookings.py -v
 
 ## CI/CD Pipeline
 
-GitHub Actions runs the full pipeline automatically on every push:
+GitHub Actions keeps the release gate deterministic on every push:
 
 1. Install dependencies
-2. Generate test cases via Claude API
-3. Execute pytest suite against live API
-4. Upload HTML test report as artifact
+2. Validate the committed, human-reviewed test-case artifact
+3. Execute the pytest suite against the live API
+4. Upload the HTML test report as an artifact
 
-The pipeline requires `ANTHROPIC_API_KEY` set as a GitHub Actions secret.
+Live Claude generation is available as a manually triggered workflow. It creates
+candidate test cases and uploads them as an artifact for review; it does not
+silently replace the reviewed cases during an ordinary push. The manual workflow
+requires `ANTHROPIC_API_KEY` set as a GitHub Actions secret and accepts an optional
+model ID, defaulting to `claude-haiku-4-5-20251001`.
 
 ---
 
