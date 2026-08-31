@@ -1,10 +1,12 @@
 # ai-qa-framework
 
+![ai-qa-framework portfolio project card](ai-qa-framework-project-card.png)
+
 **AI-Assisted Test Case Generation & Execution Framework**
 
 [![CI Pipeline](https://github.com/jensenmd/ai-qa-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/jensenmd/ai-qa-framework/actions/workflows/ci.yml)
 
-![AI-QA Framework Preview](preview.png)
+![AI-QA Framework Preview](ai-qa-framework-previewv2.png)
 
 ---
 
@@ -12,7 +14,7 @@
 
 A working demonstration of AI-assisted QA engineering — not a concept, not a tutorial clone, but a framework I built to show how AI can be integrated into real QA workflows as a **capability multiplier**, not a replacement for human judgment.
 
-This project demonstrates the philosophy I apply in my daily QA practice:
+This project is built around a core principle:
 
 > **AI proposes. Human validates. Automation executes.**
 
@@ -212,15 +214,24 @@ model ID, defaulting to `claude-haiku-4-5-20251001`.
 
 ---
 
-## Related Projects
+## QA Portfolio Quick Reference
 
-- **[qa-automation-showcase](https://github.com/jensenmd/qa-automation-showcase)** — pytest + Python/pandas data validation + Postman/JavaScript + GitHub Actions CI
-- **[restful-booker-qa](https://github.com/jensenmd/restful-booker-qa)** — Playwright/JavaScript UI automation + Postman/Newman + GitHub Actions CI
-- **[pharmacy-spend-etl-qa](https://github.com/jensenmd/pharmacy-spend-etl-qa)** — SQL-driven ETL pipeline validation using CMS Medicare Part D data
+This project is part of a broader QA portfolio demonstrating complementary quality-engineering skills.
+
+| Project | Focus |
+|---|---|
+| [android-appium-wdio-poc](https://github.com/jensenmd/android-appium-wdio-poc) | Native Android UI automation proof of concept using Appium, WebdriverIO, TypeScript, and UiAutomator2 |
+| [mapmyrun-quality-investigation](https://github.com/jensenmd/mapmyrun-quality-investigation) | Black-box mobile and GPS quality investigation using field evidence and bounded conclusions |
+| [restful-booker-qa](https://github.com/jensenmd/restful-booker-qa) | Layered API and UI automation using Postman, Newman, Playwright, and GitHub Actions |
+| [pharmacy-spend-etl-qa](https://github.com/jensenmd/pharmacy-spend-etl-qa) | ETL pipeline and SQL-driven data-integrity validation modeled after healthcare analytics work |
+| [qa-automation-showcase](https://github.com/jensenmd/qa-automation-showcase) | REST API testing, data validation, and CI/CD-integrated automation |
+| [ai-qa-framework](https://github.com/jensenmd/ai-qa-framework) **(this repository)** | Human-reviewed AI-assisted test generation with structured cases and pytest execution |
+| [claude-code-qa-sessions](https://github.com/jensenmd/claude-code-qa-sessions) | Agentic analysis of existing QA repositories with human review and targeted implementation |
+| [agentqa-orchestrator](https://github.com/jensenmd/agentqa-orchestrator) | Structured agentic code auditing using Python, Pydantic, Gemini, and JSON |
 
 ---
 
 ## Author
 
 **Michael D. Jensen** — Senior QA Engineer
-[LinkedIn](https://linkedin.com/in/michaeljensen-qa) · [GitHub](https://github.com/jensenmd)
+[LinkedIn](https://linkedin.com/in/michaeljensen-qa) · [GitHub](https://github.com/jensenmd/)
