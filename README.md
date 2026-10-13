@@ -12,7 +12,7 @@
 
 ## What This Is
 
-A working demonstration of AI-assisted QA engineering — not a concept, not a tutorial clone, but a framework I built to show how AI can be integrated into real QA workflows as a **capability multiplier**, not a replacement for human judgment.
+A practical exploration of how AI can help develop API test coverage while a QA engineer owns the decisions. Claude proposes structured cases from an OpenAPI specification; human review shapes the coverage exercised by the pytest suite.
 
 This project is built around a core principle:
 
@@ -29,7 +29,7 @@ Manual test case generation is:
 - Difficult to keep current as APIs evolve
 - Dependent on individual domain knowledge
 
-AI-assisted generation doesn't eliminate these challenges — but it dramatically accelerates the cycle and surfaces gaps that humans might miss, while keeping the QA engineer firmly in the loop.
+AI-assisted generation gives the engineer a starting point to challenge: candidate cases, potential gaps, and proposed priorities. Their usefulness depends on review against the actual system and its risks.
 
 ---
 
@@ -122,7 +122,7 @@ Additionally, Claude identifies:
 
 ## The Human-in-the-Loop Step
 
-This is the most important part of the framework — and the part most AI QA demos skip.
+Human review connects generated suggestions to the actual system, its users, and its risks.
 
 After generation, a QA engineer reviews `validation/generated_test_cases.json` and asks:
 
@@ -132,7 +132,7 @@ After generation, a QA engineer reviews `validation/generated_test_cases.json` a
 4. What did AI miss that my domain knowledge would catch?
 5. Are there compliance, regulatory, or security considerations AI didn't flag?
 
-AI generates fast and broad. Human judgment makes it accurate and meaningful.
+The generated cases are proposals. The QA engineer checks their accuracy, relevance, and priority before using them to guide coverage.
 
 ---
 
@@ -140,7 +140,7 @@ AI generates fast and broad. Human judgment makes it accurate and meaningful.
 
 I've been doing enterprise QA for 15+ years — validating ETL pipelines, financial business logic, healthcare data integrity, and REST APIs across complex distributed systems. The judgment required for that work doesn't come from a tool. It comes from understanding why the numbers matter, where systems fail, and what questions to ask when something looks wrong.
 
-AI doesn't replace that judgment. It removes the friction between thinking and output — letting me generate comprehensive test coverage faster, identify gaps I might miss, and focus my attention on the high-risk areas that actually need it.
+I use AI to move from an initial idea to a reviewable set of cases, challenge gaps, and focus my attention on the areas where failures would matter most. I still own the decisions about what to test and what the results mean.
 
 I was introduced to Ray Kurzweil's work on accelerating intelligence by a mentor in 2008. The integration of AI into knowledge work I watched coming for nearly two decades is here. This framework is how I'm applying it.
 
@@ -183,11 +183,11 @@ python -m pytest tests/test_bookings.py -v
 
 ## CI/CD Pipeline
 
-GitHub Actions keeps the release gate deterministic on every push:
+GitHub Actions separates candidate generation from regression execution on pushes and pull requests to `main`:
 
 1. Install dependencies
-2. Validate the committed, human-reviewed test-case artifact
-3. Execute the pytest suite against the live API
+2. Check that the committed test-case artifact parses as JSON
+3. Execute the implemented pytest regression suite against the live API
 4. Upload the HTML test report as an artifact
 
 Live Claude generation is available as a manually triggered workflow. It creates
@@ -198,7 +198,11 @@ model ID, defaulting to `claude-haiku-4-5-20251001`.
 
 ---
 
-## Test Results
+The JSON artifact is not a general-purpose test executor. The Python suite implements specific API scenarios and checks the generated artifact; adding a generated case does not automatically create a new executable test. Human review includes deciding which cases to implement.
+
+## Recorded Test Result
+
+The following result is retained from the existing README; it was not rerun during this documentation review and has no recorded run date here.
 
 ```
 16 passed in 8.84s
@@ -216,18 +220,19 @@ model ID, defaulting to `claude-haiku-4-5-20251001`.
 
 ## QA Portfolio Quick Reference
 
-This project is part of a broader QA portfolio demonstrating complementary quality-engineering skills.
+See [Michael D. Jensen’s QA portfolio](https://github.com/jensenmd) for the complete project overview.
 
-| Project | Focus |
-|---|---|
-| [android-appium-wdio-poc](https://github.com/jensenmd/android-appium-wdio-poc) | Native Android UI automation proof of concept using Appium, WebdriverIO, TypeScript, and UiAutomator2 |
-| [mapmyrun-quality-investigation](https://github.com/jensenmd/mapmyrun-quality-investigation) | Black-box mobile and GPS quality investigation using field evidence and bounded conclusions |
-| [restful-booker-qa](https://github.com/jensenmd/restful-booker-qa) | Layered API and UI automation using Postman, Newman, Playwright, and GitHub Actions |
-| [pharmacy-spend-etl-qa](https://github.com/jensenmd/pharmacy-spend-etl-qa) | ETL pipeline and SQL-driven data-integrity validation modeled after healthcare analytics work |
-| [qa-automation-showcase](https://github.com/jensenmd/qa-automation-showcase) | REST API testing, data validation, and CI/CD-integrated automation |
-| [ai-qa-framework](https://github.com/jensenmd/ai-qa-framework) **(this repository)** | Human-reviewed AI-assisted test generation with structured cases and pytest execution |
-| [claude-code-qa-sessions](https://github.com/jensenmd/claude-code-qa-sessions) | Agentic analysis of existing QA repositories with human review and targeted implementation |
-| [agentqa-orchestrator](https://github.com/jensenmd/agentqa-orchestrator) | Structured agentic code auditing using Python, Pydantic, Gemini, and JSON |
+| Project | Purpose and Approach |
+| --- | --- |
+| [fhir-api-qa](https://github.com/jensenmd/fhir-api-qa) | Checks whether a healthcare API preserves Patient data through its lifecycle, with isolated FHIR tests and useful CI failure evidence. |
+| [pharmacy-spend-etl-qa](https://github.com/jensenmd/pharmacy-spend-etl-qa) | Checks that pharmacy spend data survives the trip from source files to analytics tables, using SQL reconciliation on a synthetic pipeline. |
+| [restful-booker-qa](https://github.com/jensenmd/restful-booker-qa) | Tests booking behavior at both API and browser layers, combining Postman/Newman and Playwright for repeatable regression feedback. |
+| [qa-automation-showcase](https://github.com/jensenmd/qa-automation-showcase) | Examines API behavior and the quality of returned data together, using pytest, Postman, and Python validation. |
+| [android-appium-wdio-poc](https://github.com/jensenmd/android-appium-wdio-poc) | Builds a focused baseline for Android UI checks, exercising Settings navigation on a local emulator with Appium and WebdriverIO. |
+| [mapmyrun-quality-investigation](https://github.com/jensenmd/mapmyrun-quality-investigation) | Investigates how workout tracking affects data integrity and user trust, using mobile field experiments and separating observations from explanations. |
+| [ai-qa-framework](https://github.com/jensenmd/ai-qa-framework) **(this repository)** | Explores how AI can help develop useful API test coverage while keeping a QA engineer responsible for review and pytest execution. |
+| [claude-code-qa-sessions](https://github.com/jensenmd/claude-code-qa-sessions) | Shows how human QA judgment guides Claude Code from finding coverage gaps to making targeted, reviewed test improvements. |
+| [agentqa-orchestrator](https://github.com/jensenmd/agentqa-orchestrator) | Explores inspectable AI code reviews, using Gemini and Pydantic-defined response schemas to produce structured JSON audit artifacts. |
 
 ---
 
